@@ -3,30 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online - SMK N2 DOLOKSANGGUL</title>
-    <!-- Google Fonts untuk desain premium -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Link ke CSS terpisah -->
+    <title>SMKN 2 Doloksanggul - Website Resmi</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Audio Background -->
+    <audio id="bg-music" autoplay loop>
+        <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
     <header>
-        <h1>SMK N2 DOLOKSANGGUL</h1>
-        <p>Sistem Ujian Online</p>
+        <nav>
+            <div class="logo-container">
+                <img src="https://via.placeholder.com/50x50?text=Logo" alt="Logo SMKN 2 Doloksanggul" class="logo-img">
+                <div class="logo">SMKN 2 Doloksanggul</div>
+            </div>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Beranda</a></li>
+                <li><a href="#" onclick="showSection('about')">Tentang Sekolah</a></li>
+                <li><a href="#" onclick="showSection('majors')">Jurusan</a></li>
+                <li><a href="#" onclick="showSection('contact')">Kontak</a></li>
+            </ul>
+        </nav>
     </header>
-    
-    <div class="container">
-        <h2>Selamat Datang di Platform Ujian Online</h2>
-        <p>Silakan pilih opsi di bawah ini untuk memulai ujian atau melihat nilai Anda.</p>
-        <div class="buttons">
-            <button id="start-exam">Mulai Ujian</button>
-            <button id="view-scores">Lihat Nilai</button>
-        </div>
-    </div>
-    
+
+    <main>
+        <!-- Beranda -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Selamat Datang di SMKN 2 Doloksanggul</h1>
+                <p>Sekolah Menengah Kejuruan Terdepan di Doloksanggul</p>
+            </div>
+            <p>SMKN 2 Doloksanggul adalah institusi pendidikan yang berkomitmen untuk mencetak generasi muda yang siap kerja dan berinovasi. Kami menawarkan berbagai jurusan unggulan dengan fasilitas modern.</p>
+        </section>
+
+        <!-- Tentang Sekolah -->
+        <section id="about" class="section">
+            <h2>Tentang SMKN 2 Doloksanggul</h2>
+            <p>Didirikan pada tahun 2005, SMKN 2 Doloksanggul telah menjadi pusat pendidikan vokasi di wilayah ini. Kami fokus pada pengembangan keterampilan praktis dan teori yang relevan dengan dunia industri.</p>
+            <ul>
+                <li>Visi: Menjadi sekolah unggulan dalam bidang vokasi.</li>
+                <li>Misi: Mencetak lulusan yang kompeten dan berakhlak mulia.</li>
+            </ul>
+        </section>
+
+        <!-- Jurusan -->
+        <section id="majors" class="section">
+            <h2>Jurusan Kami</h2>
+            <div class="majors-grid">
+                <div class="major-card" onclick="showSection('tkj-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=TKJ" alt="Teknik Komputer dan Jaringan">
+                    <h3>Teknik Komputer dan Jaringan</h3>
+                </div>
+                <div class="major-card" onclick="showSection('te-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=TE" alt="Teknik Elektro">
+                    <h3>Teknik Elektro</h3>
+                </div>
+                <div class="major-card" onclick="showSection('tm-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=TM" alt="Teknik Mesin">
+                    <h3>Teknik Mesin</h3>
+                </div>
+                <div class="major-card" onclick="showSection('ak-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=AK" alt="Akuntansi">
+                    <h3>Akuntansi</h3>
+                </div>
+                <div class="major-card" onclick="showSection('ap-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=AP" alt="Administrasi Perkantoran">
+                    <h3>Administrasi Perkantoran</h3>
+                </div>
+                <div class="major-card" onclick="showSection('ph-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=PH" alt="Perhotelan">
+                    <h3>Perhotelan</h3>
+                </div>
+                <div class="major-card" onclick="showSection('tb-detail')">
+                    <img src="https://via.placeholder.com/300x150?text=TB" alt="Tata Boga">
+                    <h3>Tata Boga</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detail Jurusan TKJ -->
+        <section id="tkj-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Teknik Komputer dan Jaringan</h2>
+            <img src="https://via.placeholder.com/800x300?text=TKJ+Detail" alt="Teknik Komputer dan Jaringan">
+            <p>Spesifikasi: Belajar jaringan komputer, pemrograman, dan keamanan siber. Prospek kerja: IT Specialist, Network Engineer.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan TE -->
+        <section id="te-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Teknik Elektro</h2>
+            <img src="https://via.placeholder.com/800x300?text=TE+Detail" alt="Teknik Elektro">
+            <p>Spesifikasi: Instalasi listrik, elektronika, dan otomasi. Prospek kerja: Teknisi Elektro, Engineer.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan TM -->
+        <section id="tm-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Teknik Mesin</h2>
+            <img src="https://via.placeholder.com/800x300?text=TM+Detail" alt="Teknik Mesin">
+            <p>Spesifikasi: Perawatan mesin, CNC, dan manufaktur. Prospek kerja: Mekanik, Operator Mesin.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan AK -->
+        <section id="ak-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Akuntansi</h2>
+            <img src="https://via.placeholder.com/800x300?text=AK+Detail" alt="Akuntansi">
+            <p>Spesifikasi: Pembukuan, perpajakan, dan audit. Prospek kerja: Akuntan, Staff Keuangan.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan AP -->
+        <section id="ap-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Administrasi Perkantoran</h2>
+            <img src="https://via.placeholder.com/800x300?text=AP+Detail" alt="Administrasi Perkantoran">
+            <p>Spesifikasi: Manajemen administrasi, sekretaris, dan IT office. Prospek kerja: Administrasi, Sekretaris.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan PH -->
+        <section id="ph-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Perhotelan</h2>
+            <img src="https://via.placeholder.com/800x300?text=PH+Detail" alt="Perhotelan">
+            <p>Spesifikasi: Layanan hotel, restoran, dan event. Prospek kerja: Pramusaji, Manajer Hotel.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Detail Jurusan TB -->
+        <section id="tb-detail" class="section major-detail-page">
+            <button class="back-btn" onclick="showSection('majors')">Kembali</button>
+            <h2>Tata Boga</h2>
+            <img src="https://via.placeholder.com/800x300?text=TB+Detail" alt="Tata Boga">
+            <p>Spesifikasi: Memasak, bakery, dan nutrisi. Prospek kerja: Chef, Koki.</p>
+            <p>Detail lebih lanjut tentang kurikulum, fasilitas, dan kegiatan ekstrakurikuler.</p>
+        </section>
+
+        <!-- Kontak -->
+        <section id="contact" class="section">
+            <h2>Kontak Kami</h2>
+            <div class="contact-item">
+                <strong>Alamat:</strong> <a href="https://www.google.com/maps?q=Jalan+Pendidikan+No.+1,+Doloksanggul,+Sumatera+Utara" target="_blank">Jl. Pendidikan No. 1, Doloksanggul, Sumatera Utara</a>
+            </div>
+            <div class="contact-item">
+                <strong>Telepon:</strong> <span onclick="copyToClipboard('(061) 123-4567')" style="cursor: pointer; color: #667eea;">(061) 123-4567</span>
+            </div>
+            <div class="contact-item">
+                <strong>Email:</strong> <span onclick="copyToClipboard('info@smkn2doloksanggul.sch.id')" style="cursor: pointer; color: #667eea;">info@smkn2doloksanggul.sch.id</span>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <p>&copy; 2023 SMK N2 DOLOKSANGGUL. Semua hak dilindungi.</p>
+        <p>&copy; 2023 SMKN 2 Doloksanggul. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script> <!-- Link ke JS terpisah -->
+    <!-- Music Button -->
+    <button id="music-btn" onclick="toggleMusic()">⏸️</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
