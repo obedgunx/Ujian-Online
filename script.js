@@ -1,7 +1,7 @@
 // JavaScript untuk tombol "Mulai Ujian" - Fetch soal dari Apps Script API
 document.getElementById('start-exam').addEventListener('click', function() {
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbyn8bRS-4l1DnZkldqRbkG6l4vfu6TuIJTpvI5pfMFRz8zdV-1tzcw6ER9alro-v-T1ng/exec?type=form'; // Ganti dengan URL deployment Apps Script Anda + ?type=form
-    fetch(apiUrl)
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyn8bRS-4l1DnZkldqRbkG6l4vfu6TuIJTpvI5pfMFRz8zdV-1tzcw6ER9alro-v-T1ng/exec?type=form';
+    fetch(apiUrl, { mode: 'cors' }) // Tambah mode cors untuk handle error
         .then(response => response.json())
         .then(data => {
             if (data.questions && data.questions.length > 0) {
@@ -35,6 +35,70 @@ document.getElementById('start-exam').addEventListener('click', function() {
                                 e.preventDefault();
                                 alert('Jawaban dikirim! (Integrasi penyimpanan belum ditambahkan)');
                                 // Tambah logika kirim ke Sheets jika perlu
+                            });
+                        </script>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Tidak ada soal tersedia. Periksa Form Anda.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+            console.error(error);
+        });
+});
+
+// JavaScript untuk tombol "Lihat Nilai" - Fetch data dari Apps Script API
+document.getElementById('view-scores').addEventListener('click', function() {
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyn8bRS-4l1DnZkldqRbkG6l4vfu6TuIJTpvI5pfMFRz8zdV-1tzcw6ER9alro-v-T1ng/exec?type=sheets';
+    fetch(apiUrl, { mode: 'cors' }) // Tambah mode cors untuk handle error
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                let tableHtml = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jawaban Benar</th>
+                                <th>Skor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                data.results.forEach(result => {
+                    tableHtml += `<tr><td>${result.nama || ''}</td><td>${result.jawabanBenar || ''}</td><td>${result.skor || ''}</td></tr>`;
+                });
+                tableHtml += '</tbody></table>';
+
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="id">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Lihat Nilai - SMK N2 DOLOKSANGGUL</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+                        <link rel="stylesheet" href="styles.css">
+                    </head>
+                    <body class="new-page">
+                        <h2>Hasil Nilai Ujian</h2>
+                        ${tableHtml}
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Tidak ada data nilai tersedia. Periksa Sheets Anda.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+            console.error(error);
+        });
+});                                // Tambah logika kirim ke Sheets jika perlu
                             });
                         </script>
                     </body>
