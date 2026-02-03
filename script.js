@@ -1,40 +1,104 @@
-// JavaScript untuk tombol "Mulai Ujian"
+// JavaScript untuk tombol "Mulai Ujian" - Fetch soal dari Apps Script API
 document.getElementById('start-exam').addEventListener('click', function() {
-    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdH3TEtcjgasbY_Wyzd-8L0cQBduCbYb6eN5PyAn5Goc3PPRw/viewform?usp=header'; // Ganti dengan URL Google Form Anda
-    const newWindow = window.open('', '_blank');
-    newWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="id">
-        <head>
-            <meta charset="UTF-8">
-            <title>Mulai Ujian - SMA Prestasi Unggul</title>
-            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-            <style>
-                body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; margin: 0; padding: 20px; }
-                h2 { font-family: 'Playfair Display', serif; text-align: center; }
-                iframe { width: 100%; height: 80vh; border: none; border-radius: 10px; }
-            </style>
-        </head>
-        <body class="new-page">
-            <h2>Mulai Ujian Online</h2>
-            <iframe src="${formUrl}"></iframe>
-        </body>
-        </html>
-    `);
+    const apiUrl = 'https://script.google.com/macros/s/1prVRmVs_2r2u3flXgPJ5BZMcPSia_QRZVJJ5aJtaGNI/exec?type=form'; // Ganti dengan URL deployment Apps Script Anda + ?type=form
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.questions && data.questions.length > 0) {
+                let formHtml = '<form id="exam-form">';
+                data.questions.forEach((q, index) => {
+                    formHtml += `<div class="question"><label>${q.title}</label>`;
+                    q.choices.forEach(choice => {
+                        formHtml += `<input type="radio" name="q${index}" value="${choice}" required> ${choice}<br>`;
+                    });
+                    formHtml += '</div>';
+                });
+                formHtml += '<input type="text" id="nama" placeholder="Masukkan nama Anda" required><br><br>';
+                formHtml += '<button type="submit" class="submit-btn">Kirim Jawaban</button></form>';
+
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="id">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Mulai Ujian - SMK N2 DOLOKSANGGUL</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+                        <link rel="stylesheet" href="styles.css">
+                    </head>
+                    <body class="new-page">
+                        <h2>Mulai Ujian Online</h2>
+                        ${formHtml}
+                        <script>
+                            document.getElementById('exam-form').addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                alert('Jawaban dikirim! (Integrasi penyimpanan belum ditambahkan)');
+                                // Tambah logika kirim ke Sheets jika perlu
+                            });
+                        </script>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Tidak ada soal tersedia. Periksa Form Anda.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+            console.error(error);
+        });
 });
 
-// JavaScript untuk tombol "Lihat Nilai" - Fetch data dari Google Sheets CSV
+// JavaScript untuk tombol "Lihat Nilai" - Fetch data dari Apps Script API
 document.getElementById('view-scores').addEventListener('click', function() {
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1zPcXzvAmtlQOFmADMackWegwW7gnSlVg_LtcjdV0F3E/edit?gid=85157898#gid=85157898'; // Ganti dengan URL CSV Google Sheets Anda
-    fetch(sheetUrl)
-        .then(response => response.text())
+    const apiUrl = 'https://script.google.com/macros/s/1zPcXzvAmtlQOFmADMackWegwW7gnSlVg_LtcjdV0F3E/exec?type=sheets'; // Ganti dengan URL deployment Apps Script Anda + ?type=sheets
+    fetch(apiUrl)
+        .then(response => response.json())
         .then(data => {
-            const rows = data.split('\n').slice(1); // Skip header
-            let tableHtml = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
+            if (data.results && data.results.length > 0) {
+                let tableHtml = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jawaban Benar</th>
+                                <th>Skor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                data.results.forEach(result => {
+                    tableHtml += `<tr><td>${result.nama || ''}</td><td>${result.jawabanBenar || ''}</td><td>${result.skor || ''}</td></tr>`;
+                });
+                tableHtml += '</tbody></table>';
+
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="id">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Lihat Nilai - SMK N2 DOLOKSANGGUL</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+                        <link rel="stylesheet" href="styles.css">
+                    </head>
+                    <body class="new-page">
+                        <h2>Hasil Nilai Ujian</h2>
+                        ${tableHtml}
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Tidak ada data nilai tersedia. Periksa Sheets Anda.');
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+            console.error(error);
+        });
+});                            <th>Nama</th>
                             <th>Jawaban Benar</th>
                             <th>Skor</th>
                         </tr>
