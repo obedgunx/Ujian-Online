@@ -1,6 +1,6 @@
 // JavaScript untuk tombol "Mulai Ujian" - Fetch soal dari Apps Script API
 document.getElementById('start-exam').addEventListener('click', function() {
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbwLvkOBwYPjI8PdzIJZ2GHoPb-eDrlvWC255Gy8ZjG67Ut8E8asb7EoFLzZaZ3iZfSN/exec/exec?type=form'; // Ganti dengan URL deployment Apps Script Anda + ?type=form
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbwLvkOBwYPjI8PdzIJZ2GHoPb-eDrlvWC255Gy8ZjG67Ut8E8asb7EoFLzZaZ3iZfSN/exec?type=form'; // Ganti dengan URL deployment Apps Script Anda + ?type=form
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -52,7 +52,7 @@ document.getElementById('start-exam').addEventListener('click', function() {
 
 // JavaScript untuk tombol "Lihat Nilai" - Fetch data dari Apps Script API
 document.getElementById('view-scores').addEventListener('click', function() {
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbwLvkOBwYPjI8PdzIJZ2GHoPb-eDrlvWC255Gy8ZjG67Ut8E8asb7EoFLzZaZ3iZfSN/exec/exec?type=sheets'; // Ganti dengan URL deployment Apps Script Anda + ?type=sheets
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbwLvkOBwYPjI8PdzIJZ2GHoPb-eDrlvWC255Gy8ZjG67Ut8E8asb7EoFLzZaZ3iZfSN/exec?type=sheets'; // Ganti dengan URL deployment Apps Script Anda + ?type=sheets
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
